@@ -1,9 +1,19 @@
-﻿namespace DesignCrowdTechChallenge;
+﻿using DesignCrowdTechChallenge.Extensions;
 
-public class BusinessDayCounter 
+namespace DesignCrowdTechChallenge;
+
+public class BusinessDayCounter : IBusinessDayCounter
 {
     public int WeekdaysBetweenTwoDates(DateTime firstDate, DateTime secondDate)
     {
-        return 1;
+        if (firstDate.Date >= secondDate.Date)
+        {
+            return 0;
+        }
+        
+        var daysBetween = secondDate.Subtract(firstDate.AddDays(1)).Days;
+        return Enumerable.Range(0, daysBetween)
+            .Select(day => firstDate.AddDays(day))
+            .Count(datetime => datetime.DayOfWeek.IsWeekday());
     }
 }
