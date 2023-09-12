@@ -1,4 +1,5 @@
 ﻿using DesignCrowdTechChallenge.Extensions;
+using DesignCrowdTechChallenge.PublicHolidayRules;
 
 namespace DesignCrowdTechChallenge;
 
@@ -14,6 +15,12 @@ public class BusinessDayCounter : IBusinessDayCounter
     {
         return DaysBetweenTwoDates(firstDate, secondDate,
             date => date.DayOfWeek.IsWeekday() && !publicHolidays.Contains(date));
+    }
+
+    public int BusinessDaysBetweenTwoDates(DateTime firstDate, DateTime secondDate, IList<IPublicHolidayRule> publicHolidayRules)
+    {
+        return DaysBetweenTwoDates(firstDate, secondDate,
+            date => !publicHolidayRules.Any(rule => rule.IsPublicHoliday(date)));
     }
 
     private int DaysBetweenTwoDates(DateTime firstDate, DateTime secondDate, Predicate<DateTime> condition)

@@ -30,7 +30,7 @@ public class BusinessDayCounterTests
     
     [Theory]
     [MemberData(nameof(WeekdaysBetweenTwoDatesMemberData))]
-    public void WeekdaysBetweenTwoDates_ShouldReturnCorrectNumberOfDays(DateTime startDate, DateTime endDate, int expectedResult)
+    public void WeekdaysBetweenTwoDates_ShouldReturn_ExpectedNumberOfDays(DateTime startDate, DateTime endDate, int expectedResult)
     {
         var result = _businessDayCounter.WeekdaysBetweenTwoDates(startDate, endDate);
         
@@ -58,7 +58,7 @@ public class BusinessDayCounterTests
     
     [Theory]
     [MemberData(nameof(BusinessDaysBetweenTwoDatesMemberData))]
-    public void BusinessDaysBetweenTwoDates_ShouldReturnCorrectNumberOfDays(DateTime startDate, DateTime endDate, int expectedResult)
+    public void BusinessDaysBetweenTwoDates_ShouldReturn_ExpectedNumberOfDays(DateTime startDate, DateTime endDate, int expectedResult)
     {
         List<DateTime> publicHolidays = new()
         {
@@ -71,4 +71,14 @@ public class BusinessDayCounterTests
         
         Assert.Equal(expectedResult, result);
     }
+
+    // [Fact]
+    // public void BusinessDaysBetweenTwoDates_ShouldReturn_DaysThatDoNotFallInWeekendOrPublicHolidayRule()
+    // {
+    //     var startDate = new DateTime(year: 2023, month: 9, day: 11);
+    //     var endDate = new DateTime(year: 2023, month: 9, day: 13);
+    //     // Mock
+    //     
+    //     var result = _businessDayCounter.BusinessDaysBetweenTwoDates(startDate, endDate)
+    // }
 }
