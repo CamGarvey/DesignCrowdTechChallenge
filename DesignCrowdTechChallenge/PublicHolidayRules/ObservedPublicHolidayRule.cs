@@ -13,9 +13,9 @@ public class ObservedPublicHolidayRule : IPublicHolidayRule
 {
     private readonly int _month;
     private readonly int _day;
-    public ObservedPublicHolidayRule(int month, int day)
+    public ObservedPublicHolidayRule(MonthOfYear month, int day)
     {
-        _month = month;
+        _month = (int)month;
         _day = day;
     }
 

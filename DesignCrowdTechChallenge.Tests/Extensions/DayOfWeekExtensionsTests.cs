@@ -12,7 +12,7 @@ public class DayOfWeekExtensionsTests
     [InlineData(DayOfWeek.Friday, true)]
     [InlineData(DayOfWeek.Saturday, false)]
     [InlineData(DayOfWeek.Sunday, false)]
-    public void IsWeekday_ShouldReturnBool_IfTheGivenDayOfWeekIsOnAWeekDay(DayOfWeek dayOfWeek, bool expectedResult)
+    public void IsWeekday_ShouldReturn_If_TheGivenDayOfWeekIsOnAWeekDay(DayOfWeek dayOfWeek, bool expectedResult)
     {
         var result = dayOfWeek.IsWeekday();
         

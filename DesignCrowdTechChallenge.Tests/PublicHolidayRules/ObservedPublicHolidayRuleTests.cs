@@ -7,10 +7,10 @@ public class ObservedPublicHolidayRuleTests
     [Fact]
     public void IsPublicHoliday_ShouldReturn_True_If_DateTimeIsRuleDateTime_And_IsWeekday()
     {
-        const int expectedMonth = 9;
+        const MonthOfYear expectedMonth = MonthOfYear.September;
         const int expectedDay = 12;
         var rule = new ObservedPublicHolidayRule(expectedMonth, expectedDay);
-        var date = new DateTime(year: 2023, expectedMonth, expectedDay);
+        var date = new DateTime(year: 2023, (int)expectedMonth, expectedDay);
         
         var isPublicHoliday = rule.IsPublicHoliday(date);
         
@@ -20,7 +20,7 @@ public class ObservedPublicHolidayRuleTests
     [Fact]
     public void IsPublicHoliday_ShouldReturn_False_If_DateTimeMonthIsNotRuleMonth_And_RuleIsWeekday()
     {
-        const int expectedMonth = 9;
+        const MonthOfYear expectedMonth = MonthOfYear.September;
         const int expectedDay = 12;
         var rule = new ObservedPublicHolidayRule(expectedMonth, expectedDay);
         var date = new DateTime(year: 2023, month: 2, expectedDay);
@@ -33,10 +33,10 @@ public class ObservedPublicHolidayRuleTests
     [Fact]
     public void IsPublicHoliday_ShouldReturn_False_If_DateTimeDayIsNotRuleDay_And_RuleIsWeekday()
     {
-        const int expectedMonth = 9;
+        const MonthOfYear expectedMonth = MonthOfYear.September;
         const int expectedDay = 12;
         var rule = new ObservedPublicHolidayRule(expectedMonth, expectedDay);
-        var date = new DateTime(year: 2023, expectedMonth, expectedDay + 1);
+        var date = new DateTime(year: 2023, (int)expectedMonth, expectedDay + 1);
         
         var isPublicHoliday = rule.IsPublicHoliday(date);
         
@@ -46,10 +46,10 @@ public class ObservedPublicHolidayRuleTests
     [Fact]
     public void IsPublicHoliday_ShouldReturn_True_If_DateTimeDayIsMonday_And_RuleIsWeekend()
     {
-        const int expectedMonth = 9;
+        const MonthOfYear expectedMonth = MonthOfYear.September;
         const int expectedDay = 10;
         var rule = new ObservedPublicHolidayRule(expectedMonth, expectedDay);
-        var date = new DateTime(year: 2023, expectedMonth, day: 11);
+        var date = new DateTime(year: 2023, (int)expectedMonth, day: 11);
         
         var isPublicHoliday = rule.IsPublicHoliday(date);
         
@@ -64,7 +64,7 @@ public class ObservedPublicHolidayRuleTests
     [InlineData(2025, 1, false)]
     public void IsPublicHoliday_ShouldReturn_True_If_RuleIsWeekendFromPrevYear(int year, int day, bool expectedResult)
     {
-        const int expectedMonth = 12;
+        const MonthOfYear expectedMonth = MonthOfYear.December;
         const int expectedDay = 31;
         var rule = new ObservedPublicHolidayRule(expectedMonth, expectedDay);
         var date = new DateTime(year, month: 1, day: day);

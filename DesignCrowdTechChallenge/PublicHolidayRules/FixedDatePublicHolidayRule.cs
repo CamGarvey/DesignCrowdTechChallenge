@@ -9,9 +9,9 @@ public class FixedDatePublicHolidayRule : IPublicHolidayRule
     private readonly int _month;
     private readonly int _day;
     
-    public FixedDatePublicHolidayRule(int month, int day)
+    public FixedDatePublicHolidayRule(MonthOfYear month, int day)
     {
-        _month = month;
+        _month = (int)month;
         _day = day;
     }
 
