@@ -48,6 +48,11 @@ public class BusinessDayCounterTests
             1
         },
         {
+            new DateTime(year: 2013, month: 10, day: 7), 
+            new DateTime(year: 2013, month: 10, day: 8), 
+            0
+        },
+        {
             new DateTime(year: 2013, month: 12, day: 24), 
             new DateTime(year: 2013, month: 12, day: 27), 
             0
