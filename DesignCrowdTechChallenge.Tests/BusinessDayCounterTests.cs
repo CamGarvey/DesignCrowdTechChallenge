@@ -1,8 +1,11 @@
+using DesignCrowdTechChallenge.PublicHolidayRules;
+using Moq;
+
 namespace DesignCrowdTechChallenge.Tests;
 
 public class BusinessDayCounterTests
 {
-    private BusinessDayCounter _businessDayCounter = new();
+    private readonly BusinessDayCounter _businessDayCounter = new();
     
     public static TheoryData<DateTime, DateTime, int> WeekdaysBetweenTwoDatesMemberData = new()
     {
@@ -71,14 +74,47 @@ public class BusinessDayCounterTests
         
         Assert.Equal(expectedResult, result);
     }
+    
+    [Fact]
+    public void BusinessDaysBetweenTwoDates_ShouldOnlyUseDateOnPublicHolidays()
+    {
+        const int expectedResult = 0;
+        DateTime startDate = new(year: 2023, month: 9, day: 12); // Tuesday
+        DateTime endDate = new(year: 2023, month: 9, day: 14); // Thursday
+        List<DateTime> publicHolidays = new()
+        {
+            new DateTime(year: 2023, month: 9, day: 13, hour: 17, minute: 10, second: 10) // Wednesday
+        };
+        
+        var result = _businessDayCounter.BusinessDaysBetweenTwoDates(startDate, endDate, publicHolidays);
+        
+        Assert.Equal(expectedResult, result);
+    }
 
-    // [Fact]
-    // public void BusinessDaysBetweenTwoDates_ShouldReturn_DaysThatDoNotFallInWeekendOrPublicHolidayRule()
-    // {
-    //     var startDate = new DateTime(year: 2023, month: 9, day: 11);
-    //     var endDate = new DateTime(year: 2023, month: 9, day: 13);
-    //     // Mock
-    //     
-    //     var result = _businessDayCounter.BusinessDaysBetweenTwoDates(startDate, endDate)
-    // }
+    [Fact]
+    public void BusinessDaysBetweenTwoDates_ShouldReturn_DaysThatAreNotOnHolidaysOrWeekends()
+    {
+        // Days in between are Thursday, Friday, & Saturday 
+        var startDate = new DateTime(year: 2023, month: 9, day: 13);
+        var endDate = new DateTime(year: 2023, month: 9, day: 17);
+        const int expectedResult = 1; // Should be Thursday
+        Mock<IPublicHolidayRule> rule = new();
+        rule.Setup(r =>
+                r.IsPublicHoliday(It.Is<DateTime>(d => d.DayOfWeek == DayOfWeek.Friday)))
+            .Returns(true);
+        Mock<IPublicHolidayRule> alwaysFalseRule = new();
+        alwaysFalseRule.Setup(r =>
+                r.IsPublicHoliday(It.IsAny<DateTime>()))
+            .Returns(false);
+        
+        List<IPublicHolidayRule> rules = new()
+        {
+            rule.Object,
+            alwaysFalseRule.Object
+        };
+
+        var result = _businessDayCounter.BusinessDaysBetweenTwoDates(startDate, endDate, rules);
+        
+        Assert.Equal(expectedResult, result);
+    }
 }

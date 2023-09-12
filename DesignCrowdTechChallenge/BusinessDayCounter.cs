@@ -13,14 +13,15 @@ public class BusinessDayCounter : IBusinessDayCounter
     
     public int BusinessDaysBetweenTwoDates(DateTime firstDate, DateTime secondDate, IList<DateTime> publicHolidays)
     {
+        var dateOnlyPublicHolidays = publicHolidays.Select(date => date.Date);
         return DaysBetweenTwoDates(firstDate, secondDate,
-            date => date.DayOfWeek.IsWeekday() && !publicHolidays.Contains(date));
+            date => date.DayOfWeek.IsWeekday() && !dateOnlyPublicHolidays.Contains(date.Date));
     }
 
     public int BusinessDaysBetweenTwoDates(DateTime firstDate, DateTime secondDate, IList<IPublicHolidayRule> publicHolidayRules)
     {
         return DaysBetweenTwoDates(firstDate, secondDate,
-            date => !publicHolidayRules.Any(rule => rule.IsPublicHoliday(date)));
+            date => date.DayOfWeek.IsWeekday() && !publicHolidayRules.Any(rule => rule.IsPublicHoliday(date)));
     }
 
     private int DaysBetweenTwoDates(DateTime firstDate, DateTime secondDate, Predicate<DateTime> condition)

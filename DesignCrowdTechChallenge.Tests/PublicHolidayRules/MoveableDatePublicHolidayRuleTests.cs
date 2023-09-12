@@ -10,56 +10,56 @@ public class MoveableDatePublicHolidayRuleTests
             Occurence.Second,
             DayOfWeek.Monday,
             MonthOfYear.June,
-            new DateTime(year: 2023, month: 6, 12),
+            new DateTime(year: 2023, month: 6, 12, hour: 17, minute: 0, second: 10), // 2nd Monday
             true
         },
         {
             Occurence.Second,
             DayOfWeek.Monday,
             MonthOfYear.June,
-            new DateTime(year: 2024, month: 6, 10),
+            new DateTime(year: 2024, month: 6, 10, hour: 17, minute: 0, second: 10), // 2nd Monday
             true
         },
         {
             Occurence.Second,
             DayOfWeek.Monday,
             MonthOfYear.June,
-            new DateTime(year: 2024, month: 6, 11),
+            new DateTime(year: 2024, month: 6, 11, hour: 17, minute: 0, second: 10), // Tuesday
             false
         },
         {
             Occurence.First,
             DayOfWeek.Monday,
             MonthOfYear.October,
-            new DateTime(year: 2023, month: 10, 2),
+            new DateTime(year: 2023, month: 10, 2, hour: 17, minute: 0, second: 10), // 1st Monday
             true
         },
         {
             Occurence.Third,
             DayOfWeek.Tuesday,
             MonthOfYear.February,
-            new DateTime(year: 2023, month: 2, 21),
+            new DateTime(year: 2023, month: 2, 21, hour: 17, minute: 0, second: 10), // 3rd Tuesday
             true
         },
         {
             Occurence.Third,
             DayOfWeek.Tuesday,
             MonthOfYear.February,
-            new DateTime(year: 2023, month: 2, 14),
+            new DateTime(year: 2023, month: 2, 14, hour: 17, minute: 0, second: 10), // 2nd Tuesday
             false
         },        
         {
             Occurence.First,
             DayOfWeek.Friday,
             MonthOfYear.September,
-            new DateTime(year: 2023, month: 9, 1),
+            new DateTime(year: 2023, month: 9, 1, hour: 17, minute: 0, second: 10), // 1st Friday
             true
         },
         {
             Occurence.Fifth,
             DayOfWeek.Tuesday,
             MonthOfYear.October,
-            new DateTime(year: 2023, month: 10, 31),
+            new DateTime(year: 2023, month: 10, 31, hour: 17, minute: 0, second: 10), // 5th Tuesday October
             true
         }
     };

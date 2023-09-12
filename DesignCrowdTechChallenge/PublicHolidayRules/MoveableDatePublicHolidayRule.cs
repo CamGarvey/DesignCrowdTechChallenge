@@ -32,7 +32,7 @@ public class MoveableDatePublicHolidayRule : IPublicHolidayRule
         
         if (expectedDate.DayOfWeek != _dayOfWeek)
         {
-            expectedDate = expectedDate.NextDayOfWeek(_dayOfWeek);
+            expectedDate = expectedDate.Next(_dayOfWeek);
         }
 
         return expectedDate

@@ -10,7 +10,7 @@ public class FixedDatePublicHolidayRuleTests
         const int expectedMonth = 3;
         const int expectedDay = 3;
         var rule = new FixedDatePublicHolidayRule(expectedMonth, expectedDay);
-        var date = new DateTime(year: 2023, expectedMonth, expectedDay);
+        var date = new DateTime(year: 2023, expectedMonth, expectedDay, hour: 16, minute: 12, second: 10);
         
         var isPublicHoliday = rule.IsPublicHoliday(date);
         
@@ -23,7 +23,7 @@ public class FixedDatePublicHolidayRuleTests
         const int expectedMonth = 3;
         const int expectedDay = 3;
         var rule = new FixedDatePublicHolidayRule(expectedMonth, expectedDay);
-        var date = new DateTime(year: 2023, expectedMonth, expectedDay + 1);
+        var date = new DateTime(year: 2023, expectedMonth, expectedDay + 1, hour: 16, minute: 12, second: 10);
         
         var isPublicHoliday = rule.IsPublicHoliday(date);
         
@@ -36,7 +36,7 @@ public class FixedDatePublicHolidayRuleTests
         const int expectedMonth = 3;
         const int expectedDay = 3;
         var rule = new FixedDatePublicHolidayRule(expectedMonth, expectedDay);
-        var date = new DateTime(year: 2023, expectedMonth + 1, expectedDay);
+        var date = new DateTime(year: 2023, expectedMonth + 1, expectedDay, hour: 16, minute: 12, second: 10);
         
         var isPublicHoliday = rule.IsPublicHoliday(date);
         
