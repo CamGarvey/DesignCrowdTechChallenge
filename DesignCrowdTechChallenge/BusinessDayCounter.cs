@@ -21,7 +21,7 @@ public class BusinessDayCounter : IBusinessDayCounter
     public int BusinessDaysBetweenTwoDates(DateTime firstDate, DateTime secondDate, IList<IPublicHolidayRule> publicHolidayRules)
     {
         return DaysBetweenTwoDates(firstDate, secondDate,
-            date => date.DayOfWeek.IsWeekday() && !publicHolidayRules.Any(rule => rule.IsPublicHoliday(date)));
+            date => date.DayOfWeek.IsWeekday() && !date.IsPublicHoliday(publicHolidayRules));
     }
 
     private int DaysBetweenTwoDates(DateTime firstDate, DateTime secondDate, Predicate<DateTime> condition)

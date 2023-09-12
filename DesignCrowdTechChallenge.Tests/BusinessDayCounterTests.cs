@@ -81,7 +81,7 @@ public class BusinessDayCounterTests
     }
     
     [Fact]
-    public void BusinessDaysBetweenTwoDates_ShouldOnlyUseDateOnPublicHolidays()
+    public void BusinessDaysBetweenTwoDates_Should_OnlyUseDateOnPublicHolidays()
     {
         const int expectedResult = 0;
         DateTime startDate = new(year: 2023, month: 9, day: 12); // Tuesday
@@ -97,25 +97,25 @@ public class BusinessDayCounterTests
     }
 
     [Fact]
-    public void BusinessDaysBetweenTwoDates_ShouldReturn_DaysThatAreNotOnHolidaysOrWeekends()
+    public void BusinessDaysBetweenTwoDates_ShouldReturn_DaysThatAre_NotOnHolidays_Or_NotOnWeekends()
     {
         // Days in between are Thursday, Friday, & Saturday 
         var startDate = new DateTime(year: 2023, month: 9, day: 13);
         var endDate = new DateTime(year: 2023, month: 9, day: 17);
         const int expectedResult = 1; // Should be Thursday
-        Mock<IPublicHolidayRule> rule = new();
-        rule.Setup(r =>
+        Mock<IPublicHolidayRule> ruleMock = new();
+        ruleMock.Setup(r =>
                 r.IsPublicHoliday(It.Is<DateTime>(d => d.DayOfWeek == DayOfWeek.Friday)))
             .Returns(true);
-        Mock<IPublicHolidayRule> alwaysFalseRule = new();
-        alwaysFalseRule.Setup(r =>
+        Mock<IPublicHolidayRule> alwaysFalseRuleMock = new();
+        alwaysFalseRuleMock.Setup(r =>
                 r.IsPublicHoliday(It.IsAny<DateTime>()))
             .Returns(false);
         
         List<IPublicHolidayRule> rules = new()
         {
-            rule.Object,
-            alwaysFalseRule.Object
+            ruleMock.Object,
+            alwaysFalseRuleMock.Object
         };
 
         var result = _businessDayCounter.BusinessDaysBetweenTwoDates(startDate, endDate, rules);

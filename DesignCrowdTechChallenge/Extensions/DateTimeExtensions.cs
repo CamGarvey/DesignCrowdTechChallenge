@@ -1,3 +1,5 @@
+using DesignCrowdTechChallenge.PublicHolidayRules;
+
 namespace DesignCrowdTechChallenge.Extensions;
 
 public static class DateTimeExtensions
@@ -13,5 +15,8 @@ public static class DateTimeExtensions
         var date = from.Date.AddDays(1);
         var days = ((int) dayOfWeek - (int) date.DayOfWeek + 7) % 7;
         return date.AddDays(days);
-    } 
+    }
+
+    public static bool IsPublicHoliday(this DateTime date, IEnumerable<IPublicHolidayRule> rules) =>
+        rules.Any(rule => rule.IsPublicHoliday(date));
 }

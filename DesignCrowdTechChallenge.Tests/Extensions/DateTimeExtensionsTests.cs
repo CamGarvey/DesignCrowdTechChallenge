@@ -1,4 +1,6 @@
 using DesignCrowdTechChallenge.Extensions;
+using DesignCrowdTechChallenge.PublicHolidayRules;
+using Moq;
 
 namespace DesignCrowdTechChallenge.Tests.Extensions;
 
@@ -35,5 +37,55 @@ public class DateTimeExtensionsTests
         var result = startDate.Next(dayOfWeek);
         
         Assert.Equal(expectedResult, result);
+    }
+
+    [Fact]
+    public void IsPublicHoliday_ShouldReturn_False_If_AllRulesAre_False()
+    {
+        DateTime date = new(year: 2023, month: 9, day: 9);
+        Mock<IPublicHolidayRule> rule1Mock = new();
+        rule1Mock.Setup(r => 
+                r.IsPublicHoliday(
+                    It.Is<DateTime>(d => d.Equals(date))))
+            .Returns(false);
+        Mock<IPublicHolidayRule> rule2Mock = new();
+        rule2Mock.Setup(r => 
+                r.IsPublicHoliday(
+                    It.Is<DateTime>(d => d.Equals(date))))
+            .Returns(false);
+        List<IPublicHolidayRule> rules = new()
+        {
+            rule1Mock.Object,
+            rule2Mock.Object
+        };
+
+        var isPublicHoliday = date.IsPublicHoliday(rules);
+        
+        Assert.False(isPublicHoliday);
+    }
+    
+    [Fact]
+    public void IsPublicHoliday_ShouldReturn_True_If_AnyRuleIs_True()
+    {
+        DateTime date = new(year: 2023, month: 9, day: 9);
+        Mock<IPublicHolidayRule> rule1Mock = new();
+        rule1Mock.Setup(r => 
+                r.IsPublicHoliday(
+                    It.Is<DateTime>(d => d.Equals(date))))
+            .Returns(false);
+        Mock<IPublicHolidayRule> rule2Mock = new();
+        rule2Mock.Setup(r => 
+                r.IsPublicHoliday(
+                    It.Is<DateTime>(d => d.Equals(date))))
+            .Returns(true);
+        List<IPublicHolidayRule> rules = new()
+        {
+            rule1Mock.Object,
+            rule2Mock.Object
+        };
+
+        var isPublicHoliday = date.IsPublicHoliday(rules);
+        
+        Assert.True(isPublicHoliday);
     }
 }
